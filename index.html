@@ -1,411 +1,348 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=h1, initial-scale=1.0">
-    <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Aportes - Identidad Corporativa</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&family=Lovelo&display=swap"
+        rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <style>
+        /* Variables de color y fuente para la identidad corporativa */
+        :root {
+            --corporativo-amarillo: #fbc80d;
+            --corporativo-negro: #000000;
+            --corporativo-blanco: #ffffff;
+            --fuente-principal: 'Poppins', sans-serif;
+            --fuente-titulo: 'Poppins', sans-serif;
+            /* Lovelo suele requerir archivo local, usamos Poppins Bold como respaldo elegante */
+        }
+
+        body {
+            background-color: var(--corporativo-blanco);
+            font-family: var(--fuente-principal);
+            color: var(--corporativo-negro);
+        }
+
+        .container {
+            margin-top: 30px;
+        }
+
+        h3 {
+            font-family: var(--fuente-titulo);
+            font-weight: 800;
+            text-transform: uppercase;
+            color: var(--corporativo-negro);
+            border-left: 5px solid var(--corporativo-amarillo);
+            padding-left: 15px;
+            margin-bottom: 25px;
+        }
+
+        /* Estilo de la tabla Corporativa */
+        .tabla-calculadora {
+            width: 100%;
+            border-collapse: collapse;
+            border: 2px solid var(--corporativo-negro);
+            background-color: var(--corporativo-blanco);
+            box-shadow: 10px 10px 0px var(--corporativo-amarillo);
+        }
+
+        .tabla-calculadora th,
+        .tabla-calculadora td {
+            border: 1px solid var(--corporativo-negro);
+            padding: 12px;
+            vertical-align: middle;
+        }
+
+        /* Encabezados de fila (Azul anterior ahora es Negro) */
+        .bg-azul {
+            background-color: var(--corporativo-negro);
+            color: var(--corporativo-amarillo);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            width: 35%;
+        }
+
+        /* Filas de entrada y Totales */
+        .total-row {
+            background-color: var(--corporativo-amarillo);
+            color: var(--corporativo-negro);
+            font-weight: 700;
+        }
+
+        .total-row input {
+            background-color: var(--corporativo-blanco) !important;
+            font-weight: bold;
+            color: var(--corporativo-negro);
+            border: 1px solid var(--corporativo-negro) !important;
+        }
+
+        .col-resultado {
+            font-weight: 600;
+            text-align: right;
+            background-color: #fff9e6;
+            /* Un toque de crema para legibilidad */
+        }
+
+        /* Inputs y Selects */
+        .form-control,
+        .form-select {
+            border-radius: 0;
+            border: 1px solid #ddd;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: var(--corporativo-amarillo);
+            box-shadow: 0 0 0 0.25rem rgba(251, 200, 13, 0.25);
+        }
+
+        /* Selector de Radio Buttons */
+        .tipo-selector {
+            background: #f4f4f4;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border-bottom: 3px solid var(--corporativo-amarillo);
+        }
+
+        .form-check-input:checked {
+            background-color: var(--corporativo-negro);
+            border-color: var(--corporativo-negro);
+        }
+
+        #totalAporte {
+            font-size: 1.2rem;
+            text-decoration: underline;
+        }
+    </style>
 </head>
-
 <body>
-    <!--Menu-->
-
-    <nav class="navbar navbar-expand-md" style="background-color:#e3f2fd;">
-        <div class="container-fluid">
-            <a class="navbar-brand" href="#">Edward Catamuscay</a>
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
-                aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            Tutoriales de uso
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
-                    </li>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" aria-disabled="true">Normativa</a>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            Soluciones
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
-                    </li>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown"
-                            aria-expanded="false">
-                            Preguntas Frecuentes
-                        </a>
-                        <ul class="dropdown-menu">
-                            <li><a class="dropdown-item" href="#">Action</a></li>
-                            <li><a class="dropdown-item" href="#">Another action</a></li>
-                            <li>
-                                <hr class="dropdown-divider">
-                            </li>
-                            <li><a class="dropdown-item" href="#">Something else here</a></li>
-                        </ul>
-                </ul>
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
-                    <button class="btn btn-outline-success" type="submit">Search</button>
-                </form>
-            </div>
-        </div>
-    </nav>
-
-    <!--Introducción-->
-    <div class="container mt-5 ">
-        <h2 class="text-center text-primary" style="--bs-text-opacity: .5;">Calcula el valor de tus aportes a seguridad
-            social</h2>
-        <div class="row">
-            <div class="col">Esta calculadora nos permite obtener de manera facil y rapida los valores de Salud,
-                Pensión, ARL y
-                caja de compensación.
-                Esta diseñada para trabajadores dependientes y empresas las cuales necesitan tener al día sus cuentas
-                con
-                Seguridad social.
-                Ingresa los Datos para obtener el calculo exacto y asi obtener el cumplimiento de la normativa y
-                seguridad en
-                cada pago.
-            </div>
-        </div>
-
-    </div>
     <!--Calculadora-->
-    <div class="container mt-4">
+    <div class="container">
         <div class="row">
-            <div class="col-md-5">
-                <h4 class=" text-center text-primary mb-4">Calculadora de aportes</h4>
-                <form>
-                    <!--Salario-->
-                    <h5 class="bg-primary text-white">
-                        Salario mensual o ingreso base cotización (IBC)
-                    </h5>
-
-                    <input id="salario" type="number" min="1" step="1" class="form-control"
-                        oninput="this.value = this.value.replace(/^0+|[^0-9]/g,''); calcularSalud();calcularPensión();calcularARL();calcularCCF();calcularSENA();calcularICBF();"
-                        onkeydown="return event.keyCode !== 69 && event.keyCode !== 190 && event.keyCode !== 188">
-                    <!--Salud-->
-                    <h5 class="bg-primary text-white">
-                        Salud
-                    </h5>
-
-                    <select id="porcentaje" class="form-control" onchange="calcularSalud()">
-                        <option value="0">0 %</option>
-                        <option value="0.04">4 %</option>
-                        <option value="0.125">12.5 %</option>
-                    </select>
-
-                    <input id="resultado" class="form-control mt-2" readonly>
-
-                    <script>
-                        function calcularSalud() {
-                            let salario = document.getElementById("salario").value;
-                            let porcentaje = document.getElementById("porcentaje").value;
-
-                            if (salario !== "") {
-                                let resultado = salario * porcentaje;
-                                document.getElementById("resultado").value =
-                                    Math.round(resultado).toLocaleString('es-CO');
-                            } else {
-                                document.getElementById("resultado").value = "";
-                            }
-                            calcularTotal();
-                        }
-                    </script>
-                    <!--Pensión-->
-                    <h5 class="bg-primary text-white">
-                        Pensión
-                    </h5>
-                    <select id="porcentaje1" class="form-control" onchange="calcularPensión()">
-                        <option value="0">0 %</option>
-                        <option value="0.16">16 %</option>
-                    </select>
-
-                    <input id="resultado1" class="form-control mt-2" readonly>
-                    <script>
-                        function calcularPensión() {
-                            let salario = document.getElementById("salario").value;
-                            let porcentaje1 = document.getElementById("porcentaje1").value;
-
-                            if (salario !== "") {
-                                let resultado1 = salario * porcentaje1;
-                                document.getElementById("resultado1").value =
-                                    Math.round(resultado1).toLocaleString('es-CO');
-                            } else {
-                                document.getElementById("resultado1").value = "";
-                            }
-                            calcularTotal();
-                        }
-                    </script>
-                    <!--FSP-->
-                    <h5 class="bg-primary text-white">
-                        FSP
-                    </h5>
-                    <input id="resultadoFSP" class="form-control mt-2" value="0" readonly>
-                    <!--ARL-->
-                    <h5 class="bg-primary text-white">
-                        ARL
-                    </h5>
-
-                    <select id="porcentaje2"  class="form-control" onchange="calcularARL()">
-                        <option value="0">Ninguno - 0%</option>
-                        <option value="0.00522">Riesgo I - 0.522%</option>
-                        <option value="0.01044">Riesgo II - 1.044%</option>
-                        <option value="0.02436">Riesgo III - 2.436%</option>
-                        <option value="0.0435">Riesgo IV - 4.35%</option>
-                        <option value="0.0696">Riesgo V - 6.96%</option>
-                    </select>
-
-                    <input id="resultado2" class="form-control mt-2" readonly>
-
-                    <script>
-                        function calcularARL() {
-                            let salario = document.getElementById("salario").value;
-                            let porcentaje = document.getElementById("porcentaje2").value;
-
-                            if (salario > 0) {
-                                let resultado = salario * porcentaje;
-                                resultado = Math.ceil(resultado / 100) * 100;
-
-                                document.getElementById("resultado2").value =
-                                    resultado.toLocaleString('es-CO');
-                            } else {
-                                document.getElementById("resultado2").value = "";
-                            }
-                            calcularTotal();
-                        }
-                    </script>
-                    <!--CCF-->
-                    <h5 class="bg-primary text-white">
-                        CCF
-                    </h5>
-
-                    <select id="porcentaje3" class="form-control" onchange="calcularCCF()">
-                        <option value="0">0%</option>
-                        <option value="0.04">4%</option>
-                    </select>
-                    <input id="resultado3" class="form-control mt-2" readonly>
-                    <script>
-                        function calcularCCF() {
-                            let salario = document.getElementById("salario").value;
-                            let porcentaje3 = document.getElementById("porcentaje3").value;
-
-                            if (salario > 0) {
-                                let resultado = salario * porcentaje3;
-                                resultado = Math.ceil(resultado / 100) * 100;
-
-                                document.getElementById("resultado3").value =
-                                    resultado.toLocaleString('es-CO');
-                            } else {
-                                document.getElementById("resultado3").value = "";
-                            }
-                            calcularTotal();
-                        }
-                    </script>
-                    <!--SENA-->
-                    <h5 class="bg-primary text-white">
-                        SENA
-                    </h5>
-
-                    <select id="porcentaje4" class="form-control" onchange="calcularSENA()">
-                        <option value="0">0%</option>
-                        <option value="0.02">2%</option>
-                    </select>
-                    <input id="resultado4" class="form-control mt-2" readonly>
-                    <script>
-                        function calcularSENA() {
-                            let salario = document.getElementById("salario").value;
-                            let porcentaje4 = document.getElementById("porcentaje4").value;
-
-                            if (salario > 0) {
-                                let resultado = salario * porcentaje4;
-                                resultado = Math.ceil(resultado / 100) * 100;
-
-                                document.getElementById("resultado4").value =
-                                    resultado.toLocaleString('es-CO');
-                            } else {
-                                document.getElementById("resultado4").value = "";
-                            }
-                            calcularTotal();
-                        }
-                    </script>
-                    <!--ICBF-->
-                    <h5 class="bg-primary text-white">
-                        ICBF
-                    </h5>
-
-                    <select id="porcentaje5" class="form-control" onchange="calcularICBF()">
-                        <option value="0">0%</option>
-                        <option value="0.03">3%</option>
-                    </select>
-                    <input id="resultado5" class="form-control mt-2" readonly>
-                    <script>
-                        function calcularICBF() {
-                            let salario = document.getElementById("salario").value;
-                            let porcentaje5 = document.getElementById("porcentaje5").value;
-
-                            if (salario > 0) {
-                                let resultado = salario * porcentaje5;
-                                resultado = Math.ceil(resultado / 100) * 100;
-
-                                document.getElementById("resultado5").value =
-                                    resultado.toLocaleString('es-CO');
-                            } else {
-                                document.getElementById("resultado5").value = "";
-                            }
-                            calcularTotal();
-                        }
-                    </script>
-                    <!--TOTAL APORTE-->
-                    <h5 class="bg-primary text-white">
-                        Total Aporte
-                    </h5>
-
-                    <input id="totalAporte" class="form-control mt-2" readonly>
-                    <script>
-                        function limpiarNumero(valor) {
-                            return Number(valor.replace(/\./g, "")) || 0;
-                        }
-
-                        function calcularTotal() {
-                            let salud = limpiarNumero(document.getElementById("resultado").value);
-                            let pension = limpiarNumero(document.getElementById("resultado1").value);
-                            let fsp = limpiarNumero(document.getElementById("resultadoFSP").value);
-                            let arl = limpiarNumero(document.getElementById("resultado2").value);
-                            let ccf = limpiarNumero(document.getElementById("resultado3").value);
-                            let sena = limpiarNumero(document.getElementById("resultado4").value);
-                            let icbf = limpiarNumero(document.getElementById("resultado5").value);
-
-                            let total = salud + pension + fsp + arl + ccf + sena + icbf;
-
-                            document.getElementById("totalAporte").value =
-                                total.toLocaleString('es-CO');
-                        }
-                    </script>
-
-                </form>
-
-            </div>
-            <!--Video-->
-            <div class="col-md-7 ">
-
-                <h4 class="text-primary mb-3">Videotutorial</h4>
-
-                <div class="ratio ratio-16x9 shadow rounded overflow-hidden">
-                    <iframe src="https://www.youtube.com/embed/AsSxZ81ghSw" title="YouTube video" allowfullscreen>
-                    </iframe>
+            <div class="col-md-7">
+                <div class="d-flex align-items-center mb-4">
+                    <img src="Blindem.PNG" alt="Logo" style="height: 40px; width: auto; margin-right: 15px;">
+                    <h3 id="mainTitle" style="margin-bottom: 0;">Calculadora de aportes</h3>
                 </div>
-
-            </div>
-            <!--Importante-->
-            <div class="container">
-                <h4 class=" text-center text-primary mt-5">IMPORTANTE</h4>
-                <div class="row">
-                    <div class="col">
-                        Los valores son calculados para 30 dias de trabajo bajo la normativa vigente y no incluye
-                        intereses de
-                        mora;
-                        son una simulación y deben ser validos por el apartante de la planilla liquidada.
-                    </div>
-                </div>
-            </div>
-
-            <!--Tarjeta-->
-            <h4 class="text-primary mt-5">Canales para liquidar tu planilla pila</h4>
-            <div class="container mt-5 d-none d-md-block">
-                <div class="row">
-                    <div class="col">
-                        <div class="card border-0">
-                            <img src="imagenes/contacto.png" class="card-img-top rounded" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Contáctanos cuando quieras</h5>
-                            </div>
+                <div class="tipo-selector">
+                    <div class="d-flex gap-4">
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="tipo" id="independiente"
+                                onchange="cambiarTipo()">
+                            <label class="form-check-label fw-bold" for="independiente">Independientes y
+                                Contratistas</label>
                         </div>
-                    </div>
-                    <div class="col">
-                        <div class="card border-0">
-                            <img src="imagenes/email.png" class="card-img-top rounded" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Solicita tu planilla recíbela en email</h5>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card border-0">
-                            <img src="imagenes/punto.png" class="card-img-top rounded" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Puntos de atención
-                                    visítanos</h5>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col">
-                        <div class="card border-0">
-                            <img src="imagenes/transaccional.jfif" class="card-img-top rounded" alt="...">
-                            <div class="card-body">
-                                <h5 class="card-title">Plataforma transaccional autogestión</h5>
-                            </div>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" name="tipo" id="empresa" checked
+                                onchange="cambiarTipo()">
+                            <label class="form-check-label fw-bold" for="empresa">Empresa y Dependientes</label>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <!--Enlaces-->
-            <div class="footer">
-                <div class="container-fluid bg-primary p-5 text-center">
-                    <div class="row">
-                        <div class="col"><a href="https://fup.edu.co" class="text-decoration-none text-dark"><i
-                                    class="bi bi-highlighter"></i>FUP</a></div>
-                    </div>
-                    <div class="row">
-                        <div class="col"><a href="https://pagosimple.com/calculadora-de-aportes/"
-                                class="text-decoration-none text-dark"><i class="bi bi-building"></i>Pago simple</a>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col"><a href="https://www.youtube.com/watch?v=-ZInT4p9hH8"
-                                class="text-decoration-none text-dark"><i class="bi bi-camera-video-fill"></i>Video
-                                apoyo</a>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col"><a
-                                href="https://www.linkedin.com/in/edward-catamuscay-27954a361?lipi=urn%3Ali%3Apage%3Ad_flagship3_profile_view_base_contact_details%3Bc5g%2BKYnpTmS5hFCmMybnjw%3D%3D"
-                                class="text-decoration-none text-dark"><i class="bi bi-linkedin"></i>Contacto</a></div>
-                    </div>
-                </div>
+                <p class="text-muted small mb-3" id="tituloCalculadora" style="letter-spacing: 1px; font-weight: 600;">
+                </p>
+                <table class="tabla-calculadora">
+                    <!-- Fila de Ingresos / Salario -->
+                    <tr class="total-row">
+                        <td colspan="2" id="labelIngresos">Salario mensual / IBC</td>
+                        <td>
+                            <input type="text" id="salario" class="form-control" placeholder="$ 0"
+                                onkeydown="return /[0-9]|Backspace|Tab|Delete|Arrow/.test(event.key)"
+                                oninput="formatearMoneda(this); ejecutarCalculos()">
+                        </td>
+                    </tr>
+                    <!-- Fila de IBC, solo visible para Independientes -->
+                    <tr class="total-row" id="filaIBC" style="display: none;">
+                        <td colspan="2">Ingreso base cotización (IBC)</td>
+                        <td>
+                            <input type="text" id="ibcDisplay" class="form-control" readonly
+                                style="background-color: #eee !important;">
+                        </td>
+                    </tr>
+                    <!-- Valor Administración -->
+                    <tr class="total-row">
+                        <td colspan="2">Valor Administración</td>
+                        <td>
+                            <input type="text" id="valAdministracion" class="form-control" placeholder="$ 0"
+                                onkeydown="return /[0-9]|Backspace|Tab|Delete|Arrow/.test(event.key)"
+                                oninput="formatearMoneda(this); ejecutarCalculos()">
+                        </td>
+                    </tr>
+                    <!-- Salud -->
+                    <tr>
+                        <td class="bg-azul">Salud</td>
+                        <td class="col-input">
+                            <select id="porcentajeSalud" class="form-select" onchange="ejecutarCalculos()"></select>
+                        </td>
+                        <td class="col-resultado"><span id="resultadoSalud">$ 0</span></td>
+                    </tr>
+                    <!-- Pensión -->
+                    <tr>
+                        <td class="bg-azul">Pensión</td>
+                        <td class="col-input">
+                            <select id="porcentajePension" class="form-select" onchange="ejecutarCalculos()">
+                                <option value="0">0%</option>
+                                <option value="0.16">16%</option>
+                            </select>
+                        </td>
+                        <td class="col-resultado"><span id="resultadoPension">$ 0</span></td>
+                    </tr>
+                    <!-- FSP -->
+                    <tr>
+                        <td class="bg-azul">FSP</td>
+                        <td class="col-input text-center"><span id="porcentajeFSPVisual" class="badge bg-dark">0%</span>
+                        </td>
+                        <td class="col-resultado"><span id="resultadoFSP">$ 0</span></td>
+                    </tr>
+                    <!-- ARL -->
+                    <tr>
+                        <td class="bg-azul">ARL</td>
+                        <td class="col-input">
+                            <select id="porcentajeARL" class="form-select" onchange="ejecutarCalculos()">
+                                <option value="0">Ninguno - 0%</option>
+                                <option value="0.00522">Riesgo I - 0.522%</option>
+                                <option value="0.01044">Riesgo II - 1.044%</option>
+                                <option value="0.02436">Riesgo III - 2.436%</option>
+                                <option value="0.0435">Riesgo IV - 4.35%</option>
+                                <option value="0.0696">Riesgo V - 6.96%</option>
+                            </select>
+                        </td>
+                        <td class="col-resultado"><span id="resultadoARL">$ 0</span></td>
+                    </tr>
+                    <!-- CCF -->
+                    <tr>
+                        <td class="bg-azul">CCF</td>
+                        <td class="col-input">
+                            <select id="porcentajeCCF" class="form-select" onchange="ejecutarCalculos()"></select>
+                        </td>
+                        <td class="col-resultado"><span id="resultadoCCF">$ 0</span></td>
+                    </tr>
+                    <!-- Parafiscales (Solo para Empresa y Dependientes) -->
+                    <tbody id="seccionParafiscales">
+                        <!-- SENA -->
+                        <tr>
+                            <td class="bg-azul">SENA</td>
+                            <td class="col-input">
+                                <select id="porcentajeSena" class="form-select" onchange="ejecutarCalculos()">
+                                    <option value="0">0%</option>
+                                    <option value="0.02">2%</option>
+                                </select>
+                            </td>
+                            <td class="col-resultado"><span id="resultadoSena">$ 0</span></td>
+                        </tr>
+                        <!-- ICBF -->
+                        <tr>
+                            <td class="bg-azul">ICBF</td>
+                            <td class="col-input">
+                                <select id="porcentajeIcbf" class="form-select" onchange="ejecutarCalculos()">
+                                    <option value="0">0%</option>
+                                    <option value="0.03">3%</option>
+                                </select>
+                            </td>
+                            <td class="col-resultado"><span id="resultadoIcbf">$ 0</span></td>
+                        </tr>
+                    </tbody>
+                    <!-- Fila de Total -->
+                    <tr class="total-row" style="border-top: 3px solid black;">
+                        <td colspan="2" style="font-size: 1.1rem;">TOTAL APORTES</td>
+                        <td class="text-end"><span id="totalAporte">$ 0</span></td>
+                    </tr>
+                </table>
             </div>
         </div>
     </div>
+    <!-- JavaScript para cálculos y formateo -->
+    <script>
+        // Función para formatear el input como moneda
+        function formatearMoneda(input) {
+            let valor = input.value.replace(/[^0-9]/g, "");
+            if (valor === "") { input.value = ""; return; }
+            input.value = "$ " + new Intl.NumberFormat('es-CO').format(parseInt(valor));
+        }
+        // Función para obtener el valor numérico de un input formateado
+        function obtenerValorNumerico(id) {
+            const input = document.getElementById(id);
+            return parseFloat(input.value.replace(/[^0-9]/g, "")) || 0;
+        }
+        // Función para cambiar entre modos y actualizar la interfaz
+        function cambiarTipo() {
+            const esIndependiente = document.getElementById('independiente').checked;
+            const filaIBC = document.getElementById('filaIBC');
+            const seccionParafiscales = document.getElementById('seccionParafiscales');
+            const selectSalud = document.getElementById('porcentajeSalud');
+            const selectCCF = document.getElementById('porcentajeCCF');
+            const titulo = document.getElementById('tituloCalculadora');
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-        integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
-        crossorigin="anonymous"></script>
+            // Resetear campos
+            document.getElementById('salario').value = "";
+            document.getElementById('valAdministracion').value = "";
+
+            if (esIndependiente) {
+                filaIBC.style.display = 'table-row';
+                seccionParafiscales.style.display = 'none';
+                titulo.innerText = "MODO: INDEPENDIENTES Y CONTRATISTAS";
+                selectSalud.innerHTML = '<option value="0">0%</option><option value="0.125">12.5%</option>';
+                selectCCF.innerHTML = '<option value="0">0%</option><option value="0.006">0.6%</option><option value="0.02">2%</option><option value="0.04">4%</option>';
+            } else {
+                filaIBC.style.display = 'none';
+                seccionParafiscales.style.display = 'table-row-group';
+                titulo.innerText = "MODO: EMPRESA Y DEPENDIENTES";
+                selectSalud.innerHTML = '<option value="0">0%</option><option value="0.04">4%</option><option value="0.125">12.5%</option>';
+                selectCCF.innerHTML = '<option value="0">0%</option><option value="0.04">4%</option>';
+            }
+            ejecutarCalculos();
+        }
+        // Función principal para ejecutar cálculos y actualizar resultados
+        function ejecutarCalculos() {
+            const ingresos = obtenerValorNumerico('salario');
+            const valorAdmin = obtenerValorNumerico('valAdministracion');
+            const esIndependiente = document.getElementById('independiente').checked;
+            const SMMLV = 1750905;
+
+            let ibc = esIndependiente ? Math.max(ingresos * 0.40, (ingresos > 0 ? SMMLV : 0)) : ingresos;
+
+            const redondear = (v) => Math.ceil(v / 100) * 100;
+            const format = (v) => "$ " + v.toLocaleString('es-CO');
+
+            document.getElementById('ibcDisplay').value = format(ibc);
+
+            const salud = redondear(ibc * parseFloat(document.getElementById('porcentajeSalud').value));
+            const pension = redondear(ibc * parseFloat(document.getElementById('porcentajePension').value));
+            const arl = redondear(ibc * parseFloat(document.getElementById('porcentajeARL').value));
+
+            let fsp = 0;
+            let pFSP = "0%";
+            if (ibc >= (SMMLV * 4)) { fsp = redondear(ibc * 0.01); pFSP = "1%"; }
+
+            const ccf = redondear(ibc * parseFloat(document.getElementById('porcentajeCCF').value));
+            const sena = esIndependiente ? 0 : redondear(ibc * (parseFloat(document.getElementById('porcentajeSena').value) || 0));
+            const icbf = esIndependiente ? 0 : redondear(ibc * (parseFloat(document.getElementById('porcentajeIcbf').value) || 0));
+
+            document.getElementById('resultadoSalud').innerText = format(salud);
+            document.getElementById('resultadoPension').innerText = format(pension);
+            document.getElementById('resultadoFSP').innerText = format(fsp);
+            document.getElementById('porcentajeFSPVisual').innerText = pFSP;
+            document.getElementById('resultadoARL').innerText = format(arl);
+            document.getElementById('resultadoCCF').innerText = format(ccf);
+
+            if (!esIndependiente) {
+                document.getElementById('resultadoSena').innerText = format(sena);
+                document.getElementById('resultadoIcbf').innerText = format(icbf);
+            }
+
+            const total = salud + pension + fsp + arl + ccf + sena + icbf + valorAdmin;
+            document.getElementById('totalAporte').innerText = format(total);
+        }
+
+        window.onload = cambiarTipo;
+    </script>
 </body>
 
 </html>
