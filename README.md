@@ -1,4 +1,4 @@
-#  Calculadora de Aportes para Dependientes
+#  Calculadora de Aportes Seguridad Social - Blindem
 
 ##  Introducción
 En este repositorio comparto los archivos del proyecto.
